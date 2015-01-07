@@ -1,27 +1,28 @@
-Poldrack Meeting Notes: Topics in fMRI
-==================================
-
 Image Processing
-----------------------------------
+==================================
+Date: 1/7/15
 
 ### Initial notes
 - freesurfer changes data to 8 pt int
 - watch out with fslmaths, might output int from decimal input!
 
+Data storage & other details
+-----------------------------------------------------------
 ### Normalize first or after running stats?
-- fsl normalize later, after stats...why?
-  - 64 x 64 x 36 --> MNI
-    - smaller image size longer in FSL
+- FSL normalizes later, after stats...why?
+  - native 64 x 64 x 36 image --> much greater dimensions in MNI
+    - keep smaller image size (i.e., native space) longer in FSL to save space
 - in SPM convert to standard space sooner, and then run stats after
 
 ### Talairaich vs. MNI
-- French alcoholic brain vs. avg over 305 individuals
+- French alcoholic woman's brain vs. avg over 305 individuals
 - diff coordinate spaces
 - auto-talairach in AFNI is really in MNI!!
 
-### Spatial transformations
-- automated
-- **affine transforms** (linear, parallel lines remain parallel)
+Spatial transformations
+-----------------------------------------------------------
+- usually automated (unless using landmarks)
+### **affine transforms** (linear, parallel lines remain parallel)
   - translate, rotate in same plane, then resample
   - estimate parameters:
     - 2 params for translation, 1 for rotation
@@ -38,15 +39,16 @@ Image Processing
   - full affine = 12 DOF (4 types * 3 dim)
     - common for registering between subjs, even if shape a little off
     - use to go from native T1 to MNI152
-- **nonlinear transforms**
+### **nonlinear transforms**
   - more params, take longer, overfitting issues...
   - more localizer transformation
   - e.g., polynomial basis functions
   - regularize to avoid overfitting
 
-#### How to carry out transformations
+How to carry out transformations
+-----------------------------------------------------------
 - e.g., from subj T1 to MNI152
-- **Cost functions** (how similar are the 2 images?)
+### **Cost functions** (how similar are the 2 images?)
   - **Least squares**
     - If have similar images, with similar values and image intensities it works (e.g., 2 similar T2s)
   - **Normalized correlation** (default in FSL for motion correction)
@@ -63,7 +65,7 @@ Image Processing
     - Correlation ratio (Default in FSL for going between T2 and T1)
       - nonlinearity in relationship between T2 and T1
       - penalize variability in each bin
-- **Optimization**
+### **Optimization**
   - **grid search**
     - ok if you want to drain power
   - **gradient descent**
@@ -73,7 +75,7 @@ Image Processing
       - usually first do just affine, and then add in nonlinearities
   - **multiscale optimization**
 
-- **Reslicing & Interpolation**
+### **Reslicing & Interpolation**
   - **Nearest neighbor**
     - match with the best voxel
     - lose resolution, but good for when transformed image values need to match the original image
@@ -88,7 +90,8 @@ Image Processing
       - windowed sine, e.g., sin(x)/x between some x bounds
     - [**Spline interpolation**](http://en.wikipedia.org/wiki/Spline_interpolation)
 
-### Fourier Analysis
+Fourier Analysis
+-----------------------------------------------------------
 - remove certain frequencies from the data ()
 - highpass filtering
   - get rid of low frequency noise
