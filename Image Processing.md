@@ -22,6 +22,7 @@ Data storage & other details
 Spatial transformations
 -----------------------------------------------------------
 - usually automated (unless using landmarks)
+
 ### **affine transforms** (linear, parallel lines remain parallel)
 - translate, rotate in same plane, then resample
 - estimate parameters:
@@ -39,6 +40,7 @@ Spatial transformations
 - full affine = 12 DOF (4 types * 3 dim)
   - common for registering between subjs, even if shape a little off
   - use to go from native T1 to MNI152
+
 ### **nonlinear transforms**
 - more params, take longer, overfitting issues...
 - more localizer transformation
@@ -48,6 +50,7 @@ Spatial transformations
 How to carry out transformations
 -----------------------------------------------------------
 - e.g., from subj T1 to MNI152
+
 ### **Cost functions** (how similar are the 2 images?)
 - **Least squares**
   - If have similar images, with similar values and image intensities it works (e.g., 2 similar T2s)
@@ -65,6 +68,7 @@ How to carry out transformations
   - Correlation ratio (Default in FSL for going between T2 and T1)
     - nonlinearity in relationship between T2 and T1
     - penalize variability in each bin
+    
 ### **Optimization**
 - **grid search**
   - ok if you want to drain power
