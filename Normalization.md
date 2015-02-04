@@ -100,6 +100,9 @@ Normalization
   - Maybe nonlinear is better, some examples where FNIRT shows more activation than FLIRT
   - Klein 2009 says nonlinear
   - ANTS might be the best, but annoying to install/use
+  - Try taking 2 T1s, and average together to try to increase Freesurfer's reliability
+    - might be useful for cortical thickness
+    - but motion might trump that?
 
 ## QA
 - T1-normalization
@@ -122,3 +125,9 @@ Normalization
   - Account for lesions in cost function
     - leave the lesion spots out of warp
     - might impact surrounding structure too
+
+## Structure-specific alignment
+- pick that one structure and align to that (Craig Stark?)
+- Add weight during the alignment to parts that you've traced
+  - 20-50% weighting on your tracing, and let ANTS figure out the rest of the brain
+  - Maybe try inverse warp on template, and see how well it matches up
